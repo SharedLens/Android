@@ -40,4 +40,4 @@ before_script:
   - adb shell input keyevent 82 &
 
 script:
-  - travis_wait 60 ./gradlew clean connectedCheck -Dorg.gradle.java.home=/usr/lib/jvm/java-8-oracle
+  - ./gradlew build

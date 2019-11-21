@@ -1,6 +1,5 @@
 language: android
 jdk: oraclejdk8
-sudo: false
 os: linux
 
 env:
@@ -27,17 +26,19 @@ android:
     # Specify at least one system image,
     # if you need to run emulator(s) during your tests
     - sys-img-armeabi-v7a-android-29
-
-licenses:
-  - 'android-sdk-license-.+'
-  - 'google-gdk-license-.+'
-  - 'android-sdk-preview-license-.+'
+  licenses:
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
+    - 'android-sdk-preview-license-.+'
 
 before_install:
   - chmod +x gradlew
-  - echo "y" | android update sdk -a --no-ui --filter sys-img-armeabi-v7a-android-29,sys-img-x86_64-android-29
   - android list targets
-  - echo "n" | android create avd --force -n myavd1 -t "android-29" --abi "default/x86_64"
+  - echo "y" | android update sdk -a --no-ui --all --filter android-29
+  - echo "y" | android update sdk -a --no-ui --all --filter platform-tools
+  - echo "y" | android update sdk -a --no-ui --all --filter build-tools-29.0.2
+  - android list targets
+  - echo "n" | android create avd --force -n myavd1 -t "android-29" --abi "android-29"
   - emulator -avd myavd1 -no-skin -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
